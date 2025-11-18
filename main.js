@@ -535,3 +535,91 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// 邮箱链接增强处理
+function initEmailLink() {
+    const emailLink = document.getElementById('email-link');
+    const emailFallback = document.getElementById('email-fallback');
+    const copyButton = document.getElementById('copy-email');
+    const emailAddress = '3073936251@qq.com';
+    
+    if (!emailLink) return;
+    
+    // 通用复制函数
+    window.copyToClipboard = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            // 显示成功提示（创建临时提示）
+            showCopySuccess();
+        } catch (err) {
+            console.error('复制失败:', err);
+            // 降级方案
+            fallbackCopy(text);
+        }
+    };
+    
+    // 显示复制成功提示
+    function showCopySuccess() {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg z-50 transition-opacity';
+        toast.textContent = '✓ 邮箱已复制';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+    
+    // 降级复制方案
+    function fallbackCopy(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showCopySuccess();
+    }
+    
+    // 邮箱点击处理
+    emailLink.addEventListener('click', (e) => {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        
+        // 移动端或点击3秒后显示备用方案
+        if (isMobile) {
+            e.preventDefault();
+            emailFallback.classList.remove('hidden');
+            copyToClipboard(emailAddress);
+            return;
+        }
+        
+        // 桌面端：尝试打开mailto，同时准备备用方案
+        setTimeout(() => {
+            emailFallback.classList.remove('hidden');
+        }, 2000);
+    });
+    
+    // 复制按钮处理
+    if (copyButton) {
+        copyButton.addEventListener('click', () => {
+            copyToClipboard(emailAddress);
+        });
+    }
+    
+    // 页面加载后自动检测
+    setTimeout(() => {
+        // 非桌面系统直接显示
+        if (!navigator.userAgent.includes('Windows') && !navigator.userAgent.includes('Mac')) {
+            emailFallback.classList.remove('hidden');
+        }
+    }, 3000);
+}
+
+// 在DOM加载后调用
+document.addEventListener('DOMContentLoaded', function() {
+    // ... 其他初始化 ...
+    initEmailLink(); // 添加这行
+});

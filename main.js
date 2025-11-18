@@ -238,18 +238,17 @@ function initSkillNodes() {
     // 基础数据
     const skills = [
         { name: 'Transformer', x: 8, y: 18 },
-        { name: 'Meta-RL', x: 85, y: 22 },
+        { name: 'Meta-RL', x: 70, y: 20 },
         { name: 'CUDA', x: 75, y: 85 },
         { name: 'FlashAttention', x: 12, y: 88 },
         { name: 'MoE', x: 92, y: 45 },
-        { name: 'RL', x: 45, y: 50 },
-        { name: 'Q-Learning', x: 68, y: 38 },
-        { name: 'Actor-Critic', x: 82, y: 68 },
-        { name: 'SSL-RL', x: 15, y: 65 },
+        { name: 'SSL-RL', x: 10, y: 65 },
         { name: 'U-RL', x: 90, y: 15 },
         { name: 'TestTime', x: 55, y: 28 },
         { name: 'RLIF', x: 70, y: 75 },
-        { name: 'LLM', x: 25, y: 42 }
+        { name: 'LLM', x: 35, y: 42 },
+        { name: 'RLVP', x: 50, y: 75 },
+        { name: 'Actor-Critic', x: 30, y: 15 },
     ];
 
     // 防抖重叠检测与调整

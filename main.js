@@ -357,7 +357,8 @@ function initSkillNodes() {
 
     // 移动端只显示核心技能（减少50%）
     const skills = isMobileDevice() 
-        ? allSkills.filter((_, i) => i % 2 === 0) // 取偶数索引
+        ? allSkills
+        // ? allSkills.filter((_, i) => i % 2 === 0) // 取偶数索引
         : allSkills;
 
     // 防抖重叠检测与调整

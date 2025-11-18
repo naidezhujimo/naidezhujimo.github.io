@@ -340,7 +340,7 @@ function initScrollAnimations() {
 // 初始化技能节点动画
 function initSkillNodes() {
     // 基础数据
-    const skills = [
+    const allSkills = [
         { name: 'Transformer', x: 8, y: 18 },
         { name: 'Meta-RL', x: 70, y: 20 },
         { name: 'CUDA', x: 75, y: 85 },
@@ -355,8 +355,13 @@ function initSkillNodes() {
         { name: 'Actor-Critic', x: 30, y: 15 },
     ];
 
+    // 移动端只显示核心技能（减少50%）
+    const skills = isMobileDevice() 
+        ? allSkills.filter((_, i) => i % 2 === 0) // 取偶数索引
+        : allSkills;
+
     // 防抖重叠检测与调整
-    const minDistance = 120; // 最小间距（像素）
+    const minDistance = isMobileDevice() ? 60 : 120;;  // 移动端减小最小间距
     const iterations = 5; // 调整迭代次数
     const viewport = { width: window.innerWidth, height: window.innerHeight };
     
@@ -422,59 +427,52 @@ function initSkillNodes() {
     }, 800);
 }
 
-// 创建技能节点
+// 检测是否为移动端
+function isMobileDevice() {
+    return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// 创建技能节点（带移动端优化）
 function createSkillNode(name, xPercent, yPercent) {
     const node = document.createElement('div');
     node.className = 'skill-node';
     node.textContent = name;
+    
+    // 响应式尺寸：移动端40px，桌面端80px
+    const size = isMobileDevice() ? 40 : 80;
+    const fontSize = isMobileDevice() ? 10 : 12;
+    const opacity = isMobileDevice() ? 0.3 : 0.8; // 移动端更透明
+    
     node.style.cssText = `
         position: absolute;
         left: ${xPercent}%;
         top: ${yPercent}%;
-        width: 80px;
-        height: 80px;
+        width: ${size}px;
+        height: ${size}px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 12px;
+        font-size: ${fontSize}px;
         font-weight: bold;
         text-align: center;
-        z-index: 10;
+        z-index: 5; // 降低层级，不遮挡内容
         opacity: 0;
         transform: scale(0);
     `;
     
     document.body.appendChild(node);
     
-    // 动画显示
-    anime({
+    // 简化移动端动画
+    const animationConfig = {
         targets: node,
-        opacity: [0, 0.8],
+        opacity: [0, opacity],
         scale: [0, 1],
-        duration: 1000,
-        easing: 'easeOutElastic(1, .8)',
-        complete: () => {
-            // 添加悬浮效果
-            node.addEventListener('mouseenter', () => {
-                anime({
-                    targets: node,
-                    scale: 1.2,
-                    duration: 300,
-                    easing: 'easeOutQuad'
-                });
-            });
-            
-            node.addEventListener('mouseleave', () => {
-                anime({
-                    targets: node,
-                    scale: 1,
-                    duration: 300,
-                    easing: 'easeOutQuad'
-                });
-            });
-        }
-    });
+        duration: isMobileDevice() ? 600 : 1000, // 移动端动画更快
+        easing: isMobileDevice() ? 'easeOutQuad' : 'easeOutElastic(1, .8)'
+    };
+    
+    anime(animationConfig);
 }
 
 // 平滑滚动到指定元素

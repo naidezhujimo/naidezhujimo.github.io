@@ -1,12 +1,18 @@
 // 全局变量
 let neuralNetwork;
 let skillsChart;
+let echartsLoading = false;
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
     initNeuralBackground();
     initTypingEffect();
-    initSkillsChart();
+    
+    // 延迟初始化技能图表，确保 DOM 完全就绪
+    setTimeout(() => {
+        initSkillsChart();
+    }, 100);
+    
     initMobileMenu();
     initScrollAnimations();
     initSkillNodes();
@@ -120,77 +126,175 @@ function initTypingEffect() {
     typeText();
 }
 
-// 初始化技能雷达图
-function initSkillsChart() {
+// ECharts 加载函数（支持多CDN源）
+function loadECharts() {
+    return new Promise((resolve, reject) => {
+        // 如果已加载，直接返回
+        if (typeof window.echarts !== 'undefined') {
+            resolve(window.echarts);
+            return;
+        }
+        
+        // 尝试多个 CDN 源
+        const cdnSources = [
+            'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js',
+            'https://unpkg.com/echarts@5.4.3/dist/echarts.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js'
+        ];
+        
+        let currentIndex = 0;
+        
+        function tryLoadCDN() {
+            if (currentIndex >= cdnSources.length) {
+                reject(new Error('所有 ECharts CDN 源均加载失败'));
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = cdnSources[currentIndex];
+            script.crossOrigin = 'anonymous';
+            
+            script.onload = () => {
+                if (typeof window.echarts !== 'undefined') {
+                    resolve(window.echarts);
+                } else {
+                    currentIndex++;
+                    tryLoadCDN();
+                }
+            };
+            
+            script.onerror = () => {
+                console.warn(`ECharts CDN 加载失败: ${cdnSources[currentIndex]}`);
+                currentIndex++;
+                tryLoadCDN();
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        tryLoadCDN();
+    });
+}
+
+// 初始化技能雷达图（带错误处理和重试机制）
+async function initSkillsChart() {
+    if (echartsLoading) return;
+    echartsLoading = true;
+    
     const chartDom = document.getElementById('skills-chart');
     if (!chartDom) {
         console.error('Skills chart container not found');
+        echartsLoading = false;
         return;
     }
     
-    skillsChart = echarts.init(chartDom);
-    
-    const option = {
-        backgroundColor: 'transparent',
-        radar: {
-            indicator: [
-                { name: 'LLM架构', max: 100 },
-                { name: '强化学习', max: 100 },
-                { name: 'CUDA优化', max: 100 },
-                { name: '测试时扩展', max: 100 },
-                { name: '算法设计', max: 100 },
-                { name: '系统架构', max: 100 }
-            ],
-            shape: 'polygon',
-            splitNumber: 4,
-            axisName: {
-                color: '#fff',
-                fontSize: 12
-            },
-            splitLine: {
-                lineStyle: {
-                    color: 'rgba(255, 107, 53, 0.3)'
-                }
-            },
-            splitArea: {
-                show: false
-            },
-            axisLine: {
-                lineStyle: {
-                    color: 'rgba(255, 107, 53, 0.5)'
-                }
-            }
-        },
-        series: [{
-            name: '技能水平',
-            type: 'radar',
-            data: [{
-                value: [92, 96, 84, 95, 90, 80],
-                name: '技术能力',
-                areaStyle: {
-                    color: 'rgba(255, 107, 53, 0.3)'
-                },
-                lineStyle: {
-                    color: '#ff6b35',
-                    width: 2
-                },
-                itemStyle: {
-                    color: '#ff6b35'
-                }
-            }],
-            animationDuration: 2000,
-            animationEasing: 'cubicOut'
-        }]
-    };
-    
-    skillsChart.setOption(option);
-    
-    // 响应式调整
-    window.addEventListener('resize', () => {
-        if (skillsChart) {
-            skillsChart.resize();
+    // 尝试加载 ECharts
+    try {
+        // 等待 ECharts 加载（包括备用 CDN）
+        await loadECharts();
+        
+        // 再次检查是否加载成功
+        if (typeof window.echarts === 'undefined') {
+            throw new Error('ECharts library failed to load');
         }
-    });
+        
+        // 确保容器可见且有尺寸
+        if (chartDom.offsetWidth === 0 || chartDom.offsetHeight === 0) {
+            console.warn('Chart container has zero size, retrying...');
+            setTimeout(() => initSkillsChart(), 500);
+            return;
+        }
+        
+        // 初始化图表
+        skillsChart = window.echarts.init(chartDom);
+        
+        const option = {
+            backgroundColor: 'transparent',
+            radar: {
+                indicator: [
+                    { name: 'LLM架构', max: 100 },
+                    { name: '强化学习', max: 100 },
+                    { name: 'CUDA优化', max: 100 },
+                    { name: '测试时扩展', max: 100 },
+                    { name: '算法设计', max: 100 },
+                    { name: '系统架构', max: 100 }
+                ],
+                shape: 'polygon',
+                splitNumber: 4,
+                axisName: {
+                    color: '#fff',
+                    fontSize: 12
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: 'rgba(255, 107, 53, 0.3)'
+                    }
+                },
+                splitArea: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'rgba(255, 107, 53, 0.5)'
+                    }
+                }
+            },
+            series: [{
+                name: '技能水平',
+                type: 'radar',
+                data: [{
+                    value: [92, 96, 84, 95, 90, 80],
+                    name: '技术能力',
+                    areaStyle: {
+                        color: 'rgba(255, 107, 53, 0.3)'
+                    },
+                    lineStyle: {
+                        color: '#ff6b35',
+                        width: 2
+                    },
+                    itemStyle: {
+                        color: '#ff6b35'
+                    }
+                }],
+                animationDuration: 2000,
+                animationEasing: 'cubicOut'
+            }]
+        };
+        
+        skillsChart.setOption(option);
+        
+        // 响应式调整
+        window.addEventListener('resize', () => {
+            if (skillsChart) {
+                skillsChart.resize();
+            }
+        });
+        
+        console.log('Skills chart initialized successfully');
+        
+    } catch (error) {
+        console.error('Failed to initialize skills chart:', error);
+        
+        // 显示友好的错误提示
+        chartDom.innerHTML = `
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; color: #ff6b35;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <p style="margin-top: 1rem; font-size: 0.875rem;">图表加载失败</p>
+                <p style="font-size: 0.75rem; color: #888;">请检查网络连接或刷新页面</p>
+            </div>
+        `;
+        
+        // 3秒后自动重试
+        setTimeout(() => {
+            echartsLoading = false;
+            initSkillsChart();
+        }, 3000);
+        
+    } finally {
+        echartsLoading = false;
+    }
 }
 
 // 初始化移动端菜单

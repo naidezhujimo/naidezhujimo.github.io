@@ -1,13 +1,347 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>Yijun Liao - Independent Researcher</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>廖溢俊 - AI研究员 | 独立开发者</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .skill-node {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        .typing-effect {
+            border-right: 2px solid #ff6b35;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: #ff6b35; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            transition: left 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            left: 0;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(247, 147, 30, 0.2));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <h1>Yijun Liao (廖溢俊)</h1>
-    <p>Independent AI Researcher | Chongqing, China</p>
-    <p>Contact: liuyingliao0620@gmail.com</p>
-    <p>Alternative Contact: 3073936251@qq.com</p>
-    <p>ORCID: https://orcid.org/0009-0003-8875-3794</p>
+    <!-- Neural Network Background -->
+    <div id="neural-bg" class="neural-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-20 backdrop-filter backdrop-blur-lg border-b border-white border-opacity-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold gradient-text">廖溢俊</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">首页</a>
+                        <a href="projects.html" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">项目</a>
+                        <a href="about.html" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">关于</a>
+                        <a href="#contact" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">联系</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-orange-400">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black bg-opacity-90">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">首页</a>
+                <a href="projects.html" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">项目</a>
+                <a href="about.html" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">关于</a>
+                <a href="#contact" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">联系</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Side - Personal Info -->
+                <div class="text-center lg:text-left">
+                    <div class="mb-8">
+                        <img src="resources/avatar.jpg" alt="廖溢俊" class="w-32 h-32 rounded-full mx-auto lg:mx-0 mb-6 border-4 border-orange-400 shadow-2xl">
+                        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4">
+                            <span class="gradient-text">廖溢俊</span>
+                        </h1>
+                        <h2 class="text-2xl lg:text-3xl text-gray-300 mb-6">
+                            <span id="typing-text" class="typing-effect"></span>
+                        </h2>
+                        <p class="text-lg text-gray-400 leading-relaxed mb-8">
+                            18岁独立AI研究员，专注于LLM架构优化、强化学习、测试时扩展和CUDA计算优化。
+                            在AAAI 2026担任Program Committee成员，积极参与前沿AI研究。
+                        </p>
+                    </div>
+                    
+                    <!-- Contact Links -->
+                    <div class="flex justify-center lg:justify-start space-x-6 mb-8">
+                        <a href="https://github.com/naidezhujimo" target="_blank" class="text-white hover:text-orange-400 transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://openreview.net/profile?id=%7ELiao_Yijun1" target="_blank" class="text-white hover:text-orange-400 transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </a>
+                        <a href="https://blog.csdn.net/2303_79071981?spm=1000.2115.3001.5343" target="_blank" class="text-white hover:text-orange-400 transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:3073936251@qq.com" class="text-white hover:text-orange-400 transition-colors duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Skills Visualization -->
+                <div class="relative">
+                    <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-10">
+                        <h3 class="text-2xl font-bold text-white mb-6 text-center">核心技术栈</h3>
+                        <div id="skills-chart" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-white mb-12">
+                <span class="gradient-text">学术成就</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="achievement-badge rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <h3 class="text-xl font-bold text-white mb-2">AAAI 2026</h3>
+                    <p class="text-gray-300">Program Committee成员</p>
+                    <p class="text-sm text-gray-400 mt-2">参与顶级AI会议评审工作</p>
+                </div>
+                <div class="achievement-badge rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold text-white mb-2">ARC Prize 2025</h3>
+                    <p class="text-gray-300">竞赛参与者</p>
+                    <p class="text-sm text-gray-400 mt-2">挑战抽象推理能力测试</p>
+                </div>
+                <div class="achievement-badge rounded-xl p-6 text-center">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-white mb-2">论文评分</h3>
+                    <p class="text-gray-300">AAAI 2026评分5分</p>
+                    <p class="text-sm text-gray-400 mt-2">《DTTC: 动态测试时间计算扩展框架》</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Preview Section -->
+    <section id="projects-preview" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-white mb-12">
+                <span class="gradient-text">重点项目</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">YH</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">YingHub V3</h3>
+                            <p class="text-gray-400">稀疏混合专家语言模型</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">基于Triton实现Flash Attention，支持异构专家和动态Top-k路由的先进语言模型架构。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-orange-500 bg-opacity-20 text-orange-400 rounded-full text-sm">LLM</span>
+                        <span class="px-3 py-1 bg-blue-500 bg-opacity-20 text-blue-400 rounded-full text-sm">MoE</span>
+                        <span class="px-3 py-1 bg-green-500 bg-opacity-20 text-green-400 rounded-full text-sm">Triton</span>
+                    </div>
+                    <a href="https://github.com/naidezhujimo/YingHub-v3" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">查看项目 →</a>
+                </div>
+                
+                <div class="project-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">RL</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">强化学习项目集</h3>
+                            <p class="text-gray-400">算法实现与优化</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">包含DQN、PPO、GRPO、TD3等主流强化学习算法和ICM、RENT、RaR、INTUITOR等前沿强化学习算法的完整实现，支持多种环境训练。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-purple-500 bg-opacity-20 text-purple-400 rounded-full text-sm">RL</span>
+                        <span class="px-3 py-1 bg-red-500 bg-opacity-20 text-red-400 rounded-full text-sm">Meta-RL</span>
+                        <span class="px-3 py-1 bg-blue-500 bg-opacity-20 text-red-400 rounded-full text-sm">SSL-RL</span>
+                        <span class="px-3 py-1 bg-green-500 bg-opacity-20 text-red-400 rounded-full text-sm">U-RL</span>
+                        <span class="px-3 py-1 bg-yellow-500 bg-opacity-20 text-yellow-400 rounded-full text-sm">CUDA</span>
+                    </div>
+                    <a href="https://github.com/naidezhujimo" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">查看项目 →</a>
+                </div>
+                
+                <div class="project-card rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-teal-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">FA</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Triton FlashAttention</h3>
+                            <p class="text-gray-400">CUDA计算优化</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">使用Triton重写Flash Attention内核，实现高效的注意力机制计算优化。</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-cyan-500 bg-opacity-20 text-cyan-400 rounded-full text-sm">CUDA</span>
+                        <span class="px-3 py-1 bg-indigo-500 bg-opacity-20 text-indigo-400 rounded-full text-sm">Triton</span>
+                        <span class="px-3 py-1 bg-pink-500 bg-opacity-20 text-pink-400 rounded-full text-sm">Attention</span>
+                    </div>
+                    <a href="https://github.com/naidezhujimo/Triton-FlashAttention" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">查看项目 →</a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="projects.html" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold rounded-lg hover:from-orange-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105">
+                    查看所有项目
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-8">
+                    <span class="gradient-text">联系我</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    对AI研究感兴趣？欢迎与我交流讨论！
+                </p>
+                <div class="flex justify-center space-x-8">
+                    <a href="mailto:3073936251@qq.com" class="bg-gradient-to-r from-orange-400 to-red-500 text-white px-8 py-3 rounded-lg hover:from-orange-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105">
+                        发送邮件
+                    </a>
+                    <a href="https://github.com/naidezhujimo" target="_blank" class="border-2 border-orange-400 text-orange-400 px-8 py-3 rounded-lg hover:bg-orange-400 hover:text-white transition-all duration-300">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-400">
+                    © 2025 廖溢俊. 独立AI研究员 | 专注于LLM架构优化与强化学习
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>

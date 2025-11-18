@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我 - 廖溢俊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        
+        .tech-item {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: rgba(255, 107, 53, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            transition: left 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            left: 0;
+        }
+        
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-20 backdrop-filter backdrop-blur-lg border-b border-white border-opacity-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold gradient-text">廖溢俊</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">首页</a>
+                        <a href="projects.html" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">项目</a>
+                        <a href="about.html" class="nav-link text-orange-400 px-3 py-2 text-sm font-medium">关于</a>
+                        <a href="index.html#contact" class="nav-link text-white hover:text-orange-400 px-3 py-2 text-sm font-medium">联系</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-orange-400">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black bg-opacity-90">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">首页</a>
+                <a href="projects.html" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">项目</a>
+                <a href="about.html" class="text-orange-400 block px-3 py-2 text-base font-medium">关于</a>
+                <a href="index.html#contact" class="text-white hover:text-orange-400 block px-3 py-2 text-base font-medium">联系</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <img src="resources/avatar.jpg" alt="廖溢俊" class="w-32 h-32 rounded-full mx-auto mb-8 border-4 border-orange-400 shadow-2xl">
+                <h1 class="text-5xl font-bold text-white mb-6">
+                    <span class="gradient-text">关于我</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    我是一名18岁的独立AI研究员，目前就读于高三。在AI领域有着深厚的技术积累，
+                    特别是在大语言模型架构优化、强化学习算法设计和CUDA计算优化方面。
+                    我热衷于探索前沿技术，并积极参与学术社区的开源贡献。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Background Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">教育背景</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-4">当前状态</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    高三在读学生
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    独立AI研究员
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    开源项目贡献者
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    AAAI 2026 Program Committee成员
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-4">研究兴趣</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    大语言模型架构优化
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    强化学习算法设计
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    CUDA计算优化
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3"></span>
+                                    测试时计算扩展
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">技术专长</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- LLM Architecture -->
+                <div class="skill-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">LLM</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">大语言模型</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        深入理解Transformer架构，掌握MoE、RLHF、RoPE、FlashAttention等核心技术。
+                        具备从零开始实现和优化大语言模型的能力。
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Transformer</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">MoE架构</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">RLHF</span>
+                            <span class="text-orange-400">高级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">FlashAttention</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reinforcement Learning -->
+                <div class="skill-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">RL</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">强化学习</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        掌握从基础到高级的强化学习算法，包括策略梯度、Actor-Critic、PPO、
+                        DPO等，具备丰富的算法实现和调优经验。
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">策略梯度</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Actor-Critic</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">PPO/DPO</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">多智能体</span>
+                            <span class="text-orange-400">高级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">自监督</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">无监督</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">模型监督</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CUDA Optimization -->
+                <div class="skill-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-xl">CUDA</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">CUDA优化</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        精通CUDA C++编程，掌握GPU并行计算优化技术。
+                        能够手写高效的深度学习算子和数值计算内核。
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">CUDA C++</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">GPU优化</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Triton</span>
+                            <span class="text-orange-400">高级</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">并行计算</span>
+                            <span class="text-orange-400">专家级</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">技术栈</span>
+            </h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <!-- Programming Languages -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-white mb-6 text-center">编程语言</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">🐍</div>
+                            <div class="text-white font-semibold">Python</div>
+                            <div class="text-sm text-gray-400">专家级</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">⚡</div>
+                            <div class="text-white font-semibold">CUDA C++</div>
+                            <div class="text-sm text-gray-400">专家级</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">🔥</div>
+                            <div class="text-white font-semibold">PyTorch</div>
+                            <div class="text-sm text-gray-400">专家级</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">💎</div>
+                            <div class="text-white font-semibold">TensorFlow</div>
+                            <div class="text-sm text-gray-400">高级</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">🚀</div>
+                            <div class="text-white font-semibold">JAX</div>
+                            <div class="text-sm text-gray-400">中级</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-4 text-center">
+                            <div class="text-3xl mb-2">⚙️</div>
+                            <div class="text-white font-semibold">C++</div>
+                            <div class="text-sm text-gray-400">高级</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Frameworks & Tools -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold text-white mb-6 text-center">框架与工具</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">🎯</div>
+                            <div class="text-white text-sm font-semibold">HuggingFace</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">🔄</div>
+                            <div class="text-white text-sm font-semibold">Ray</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">📊</div>
+                            <div class="text-white text-sm font-semibold">WandB</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">🎮</div>
+                            <div class="text-white text-sm font-semibold">gymnasium</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">🔧</div>
+                            <div class="text-white text-sm font-semibold">Docker</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">☁️</div>
+                            <div class="text-white text-sm font-semibold">AWS</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">💻</div>
+                            <div class="text-white text-sm font-semibold">Linux</div>
+                        </div>
+                        <div class="tech-item rounded-lg p-3 text-center">
+                            <div class="text-2xl mb-1">📈</div>
+                            <div class="text-white text-sm font-semibold">MLflow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Experience -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">学术经历</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-10">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-xl">AA</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white mb-2">AAAI 2026 Program Committee</h3>
+                            <p class="text-orange-400 text-sm mb-3">2025年 - 至今</p>
+                            <p class="text-gray-300 mb-4">
+                                被选为AAAI 2026会议的Program Committee成员，参与顶级AI会议的论文评审工作。
+                                负责评审机器学习、自然语言处理等领域的研究论文。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-orange-500 bg-opacity-20 text-orange-400 rounded-full text-sm">学术评审</span>
+                                <span class="px-3 py-1 bg-blue-500 bg-opacity-20 text-blue-400 rounded-full text-sm">顶级会议</span>
+                                <span class="px-3 py-1 bg-green-500 bg-opacity-20 text-green-400 rounded-full text-sm">AI研究</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-10">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-xl">AR</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white mb-2">ARC Prize 2025 竞赛</h3>
+                            <p class="text-orange-400 text-sm mb-3">2025年</p>
+                            <p class="text-gray-300 mb-4">
+                                参加ARC Prize 2025竞赛，挑战抽象推理和概念学习能力的极限。
+                                通过创新的算法设计和模型架构，探索AI系统在抽象思维方面的能力边界。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-purple-500 bg-opacity-20 text-purple-400 rounded-full text-sm">抽象推理</span>
+                                <span class="px-3 py-1 bg-red-500 bg-opacity-20 text-red-400 rounded-full text-sm">概念学习</span>
+                                <span class="px-3 py-1 bg-yellow-500 bg-opacity-20 text-yellow-400 rounded-full text-sm">算法竞赛</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-10">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-xl">PA</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white mb-2">论文提交经历</h3>
+                            <p class="text-orange-400 text-sm mb-3">2025年</p>
+                            <p class="text-gray-300 mb-4">
+                                向AAAI 2026提交论文《DTTC: An Extended Framework for Dynamic Test Time Computing with Lightweight Mathematical Reasoning》，
+                                虽然最终未被录用（得分5分），但获得了宝贵的评审反馈，为后续研究提供了重要指导。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-cyan-500 bg-opacity-20 text-cyan-400 rounded-full text-sm">论文写作</span>
+                                <span class="px-3 py-1 bg-indigo-500 bg-opacity-20 text-indigo-400 rounded-full text-sm">学术发表</span>
+                                <span class="px-3 py-1 bg-pink-500 bg-opacity-20 text-pink-400 rounded-full text-sm">测试时计算</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Highlights -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">技术博客精选</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="blog-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">LLM架构优化实战</h3>
+                    <p class="text-gray-300 mb-4">
+                        深入探讨大语言模型架构优化的各种技术，包括注意力机制优化、
+                        模型并行策略和内存优化技巧。
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">2025年5月</span>
+                        <a href="https://blog.csdn.net/2303_79071981?spm=1000.2115.3001.5343" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">
+                            阅读文章 →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="blog-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">强化学习算法详解</h3>
+                    <p class="text-gray-300 mb-4">
+                        从基础概念到高级算法，全面解析强化学习的核心原理和实现技巧，
+                        包含大量代码示例。
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">2025年5月</span>
+                        <a href="https://blog.csdn.net/2303_79071981?spm=1000.2115.3001.5343" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">
+                            阅读文章 →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="blog-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">CUDA编程指南</h3>
+                    <p class="text-gray-300 mb-4">
+                        CUDA编程的完整学习路径，从基础概念到高级优化技巧，
+                        帮助开发者掌握GPU并行计算。
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">2025年6月</span>
+                        <a href="https://blog.csdn.net/2303_79071981?spm=1000.2115.3001.5343" target="_blank" class="text-orange-400 hover:text-orange-300 transition-colors duration-300">
+                            阅读文章 →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://blog.csdn.net/2303_79071981?spm=1000.2115.3001.5343" target="_blank" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-orange-400 to-red-500 text-white font-semibold rounded-lg hover:from-orange-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105">
+                    访问CSDN博客
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Goals -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">
+                <span class="gradient-text">未来规划</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white bg-opacity-5 backdrop-filter backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-4">短期目标</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    继续深化LLM架构优化研究，探索更高效的注意力机制
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    继续深化强化学习研究，探索更完善的奖励建模与损失函数设计
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    完善YingHub系列项目，构建完整的生态系统
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    参与更多顶级AI学术会议和竞赛
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-4">长期愿景</h3>
+                            <ul class="space-y-3 text-gray-300">
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    在AI领域做出原创性贡献，推动技术发展
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    建立AI研究实验室，培养下一代AI人才
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    推动AI技术在解决实际问题中的应用
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                    成为连接学术界和产业界的桥梁
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-8">
+                    <span class="gradient-text">让我们一起探索AI的未来</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    如果您对AI研究感兴趣，或者想要合作开展项目，欢迎与我联系。
+                    我热衷于技术交流和学术合作，相信通过协作可以推动AI技术的发展。
+                </p>
+                <div class="flex justify-center space-x-8">
+                    <a href="mailto:3073936251@qq.com" class="bg-gradient-to-r from-orange-400 to-red-500 text-white px-8 py-3 rounded-lg hover:from-orange-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105">
+                        发送邮件
+                    </a>
+                    <a href="https://github.com/naidezhujimo" target="_blank" class="border-2 border-orange-400 text-orange-400 px-8 py-3 rounded-lg hover:bg-orange-400 hover:text-white transition-all duration-300">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-400">
+                    © 2025 廖溢俊. 独立AI研究员 | 专注于LLM架构优化与强化学习
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // 页面加载动画
+        anime({
+            targets: '.skill-card',
+            translateY: [50, 0],
+            opacity: [0, 1],
+            duration: 600,
+            delay: anime.stagger(200),
+            easing: 'easeOutQuad'
+        });
+
+        anime({
+            targets: '.tech-item',
+            scale: [0.8, 1],
+            opacity: [0, 1],
+            duration: 500,
+            delay: anime.stagger(50),
+            easing: 'easeOutQuad'
+        });
+
+        anime({
+            targets: '.blog-card',
+            translateX: [-50, 0],
+            opacity: [0, 1],
+            duration: 600,
+            delay: anime.stagger(150),
+            easing: 'easeOutQuad'
+        });
+    </script>
+</body>
+</html>

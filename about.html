@@ -450,76 +450,113 @@
                 </div>
             
                 <!-- 框架与工具 -->
-                <div class="mb-12">
-                    <h3 class="text-2xl font-bold text-white mb-6 text-center">框架与工具</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🎯</div>
-                            <div class="text-white text-sm font-semibold">HuggingFace</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🔄</div>
-                            <div class="text-white text-sm font-semibold">Ray</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">📊</div>
-                            <div class="text-white text-sm font-semibold">WandB</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🎮</div>
-                            <div class="text-white text-sm font-semibold">gymnasium</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🔧</div>
-                            <div class="text-white text-sm font-semibold">Docker</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">☁️</div>
-                            <div class="text-white text-sm font-semibold">AWS</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">💻</div>
-                            <div class="text-white text-sm font-semibold">Linux</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">📈</div>
-                            <div class="text-white text-sm font-semibold">MLflow</div>
-                        </div>
-                        
-                        <!-- 新增工具 -->
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">⚡🔥</div>
-                            <div class="text-white text-sm font-semibold">vLLM</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🔷</div>
-                            <div class="text-white text-sm font-semibold">ONNX</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">📔</div>
-                            <div class="text-white text-sm font-semibold">Jupyter</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🔢</div>
-                            <div class="text-white text-sm font-semibold">NumPy</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🚀</div>
-                            <div class="text-white text-sm font-semibold">TensorRT</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🌐</div>
-                            <div class="text-white text-sm font-semibold">Kubernetes</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">🎨</div>
-                            <div class="text-white text-sm font-semibold">Matplotlib</div>
-                        </div>
-                        <div class="tech-item rounded-lg p-3 text-center">
-                            <div class="text-2xl mb-1">📐</div>
-                            <div class="text-white text-sm font-semibold">Math</div>
-                        </div>
-                    </div>
+<!-- 框架与工具 -->
+<div class="mb-12">
+    <h3 class="text-2xl font-bold text-white mb-6 text-center">框架与工具</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        <!-- 原有工具 -->
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🎯</div>
+            <div class="text-white text-sm font-semibold">HuggingFace</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🔄</div>
+            <div class="text-white text-sm font-semibold">Ray</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">📊</div>
+            <div class="text-white text-sm font-semibold">WandB</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🎮</div>
+            <div class="text-white text-sm font-semibold">gymnasium</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🔧</div>
+            <div class="text-white text-sm font-semibold">Docker</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">☁️</div>
+            <div class="text-white text-sm font-semibold">AWS</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">💻</div>
+            <div class="text-white text-sm font-semibold">Linux</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">📈</div>
+            <div class="text-white text-sm font-semibold">MLflow</div>
+        </div>
+        
+        <!-- 新增工具（第一波） -->
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">⚡🔥</div>
+            <div class="text-white text-sm font-semibold">vLLM</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🔷</div>
+            <div class="text-white text-sm font-semibold">ONNX</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">📔</div>
+            <div class="text-white text-sm font-semibold">Jupyter</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🔢</div>
+            <div class="text-white text-sm font-semibold">NumPy</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🚀</div>
+            <div class="text-white text-sm font-semibold">TensorRT</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🌐</div>
+            <div class="text-white text-sm font-semibold">Kubernetes</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🎨</div>
+            <div class="text-white text-sm font-semibold">Matplotlib</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">📐</div>
+            <div class="text-white text-sm font-semibold">Math</div>
+        </div>
+        
+        <!-- 新增工具（第二波） -->
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">📄</div>
+            <div class="text-white text-sm font-semibold">HTML</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🎨</div>
+            <div class="text-white text-sm font-semibold">CSS</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">⚡</div>
+            <div class="text-white text-sm font-semibold">JavaScript</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🔷</div>
+            <div class="text-white text-sm font-semibold">TypeScript</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">💚</div>
+            <div class="text-white text-sm font-semibold">Vue 3</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🧪</div>
+            <div class="text-white text-sm font-semibold">Flask</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🎸</div>
+            <div class="text-white text-sm font-semibold">Django</div>
+        </div>
+        <div class="tech-item rounded-lg p-3 text-center">
+            <div class="text-2xl mb-1">🐬</div>
+            <div class="text-white text-sm font-semibold">MySQL</div>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>

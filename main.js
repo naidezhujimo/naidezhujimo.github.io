@@ -355,11 +355,12 @@ function initSkillNodes() {
         { name: 'Actor-Critic', x: 30, y: 15 },
     ];
 
-    // 移动端只显示核心技能（减少50%）
-    const skills = isMobileDevice() 
-        ? allSkills
-        // ? allSkills.filter((_, i) => i % 2 === 0) // 取偶数索引
-        : allSkills;
+    // // 移动端只显示核心技能（减少50%）
+    // const skills = isMobileDevice() 
+    //     ? allSkills
+    //     // ? allSkills.filter((_, i) => i % 2 === 0) // 取偶数索引
+    //     : allSkills;
+    const skills = allSkills
 
     // 防抖重叠检测与调整
     const minDistance = isMobileDevice() ? 60 : 120;;  // 移动端减小最小间距
